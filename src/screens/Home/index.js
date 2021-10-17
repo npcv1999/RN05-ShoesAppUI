@@ -40,6 +40,7 @@ const renderRecently = ({item, index}) => {
           flex: 1,
           justifyContent: 'center',
           alignItems: 'center',
+          paddingHorizontal: 10,
         }}>
         <Image
           source={item.img}
