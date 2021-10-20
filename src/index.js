@@ -19,6 +19,7 @@ const BarStyle = {
   animated: true,
   barStyle: 'dark-content',
   hidden: false,
+  backgroundColor: 'white',
 };
 
 const App = () => {

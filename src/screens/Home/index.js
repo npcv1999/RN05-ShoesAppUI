@@ -4,8 +4,9 @@ import {data, images} from '../../utils';
 import {styles} from './styles';
 
 import {Svg, Polygon} from 'react-native-svg';
+import ModalProduct from '../../components/Home/ModalProduct';
 
-const renderTrending = ({item, index}) => {
+const renderTrending = (item, index, onPress) => {
   var marginIndex = {};
   if (index == 0) marginIndex = styles.mgLef;
   return (
@@ -25,16 +26,18 @@ const renderTrending = ({item, index}) => {
         </Svg>
       </View>
 
-      <TouchableOpacity style={styles.typeImg}>
+      <TouchableOpacity style={styles.typeImg} onPress={() => onPress(item)}>
         <Image style={{width: '98%', height: 80}} source={item.img}></Image>
       </TouchableOpacity>
     </View>
   );
 };
 
-const renderRecently = ({item, index}) => {
+const renderRecently = (item, index, onPress) => {
   return (
-    <TouchableOpacity style={{flexDirection: 'row', flex: 1}}>
+    <TouchableOpacity
+      style={{flexDirection: 'row', flex: 1}}
+      onPress={() => onPress(item)}>
       <View
         style={{
           flex: 1,
@@ -58,9 +61,22 @@ const renderRecently = ({item, index}) => {
 const Home = () => {
   const [trending, setTrending] = useState(data.trending);
   const [recently, setRecently] = useState(data.recently);
+
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [selectSize, setSelectSize] = useState('');
+
+  const onPressItem = item => {
+    setSelectedItem(item);
+  };
   console.log('value', trending);
   return (
     <View style={styles.container}>
+      {selectedItem && (
+        <ModalProduct
+          item={selectedItem}
+          size={selectSize}
+          onPress={() => setSelectedItem(null)}></ModalProduct>
+      )}
       {/* Title */}
 
       <Text style={styles.trendingLabel}>TRENDING</Text>
@@ -72,7 +88,9 @@ const Home = () => {
           showsHorizontalScrollIndicator={false}
           data={trending}
           keyExtractor={item => item.id.toString()}
-          renderItem={renderTrending}></FlatList>
+          renderItem={({item, index}) =>
+            renderTrending(item, index, onPressItem)
+          }></FlatList>
       </View>
 
       {/* List product */}
@@ -88,7 +106,9 @@ const Home = () => {
             showsVerticalScrollIndicator={false}
             data={recently}
             keyExtractor={item => item.id.toString()}
-            renderItem={renderRecently}></FlatList>
+            renderItem={({item, index}) =>
+              renderRecently(item, index, onPressItem)
+            }></FlatList>
         </View>
       </View>
     </View>
