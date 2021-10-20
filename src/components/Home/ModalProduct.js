@@ -48,7 +48,7 @@ function renderShoeSizes(selectedItem, selectedSize) {
   });
 }
 
-const ModalProduct = ({onPress, item, size}) => {
+const ModalProduct = ({onClose, item, size}) => {
   return (
     <View style={styles.centeredView}>
       <Modal animationType="slide" transparent={true} visible={true}>
@@ -112,7 +112,7 @@ const ModalProduct = ({onPress, item, size}) => {
                 }}>
                 {renderShoeSizes(item, size)}
               </View>
-              <TouchableOpacity onPress={() => console.log('abc', size)}>
+              <TouchableOpacity onPress={onClose}>
                 <Text>Close</Text>
               </TouchableOpacity>
             </View>

@@ -75,7 +75,7 @@ const Home = () => {
         <ModalProduct
           item={selectedItem}
           size={selectSize}
-          onPress={() => setSelectedItem(null)}></ModalProduct>
+          onClose={() => setSelectedItem(null)}></ModalProduct>
       )}
       {/* Title */}
 
