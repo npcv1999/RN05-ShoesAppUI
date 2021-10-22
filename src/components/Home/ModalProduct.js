@@ -4,13 +4,12 @@ import {
   Text,
   Modal,
   StyleSheet,
-  Pressable,
   TouchableOpacity,
   Image,
 } from 'react-native';
 import {COLORS, FONTS, SIZES} from '../../utils';
 
-function renderShoeSizes(selectedItem, selectedSize) {
+const RenderShoeSizes = ({selectedItem, selectedSize, passToParent}) => {
   const [selectSize, setSelectSize] = useState(selectedSize);
   return selectedItem.sizes.map((item, index) => {
     return (
@@ -30,8 +29,7 @@ function renderShoeSizes(selectedItem, selectedSize) {
           borderRadius: 5,
         }}
         onPress={() => {
-          setSelectSize(item);
-          console.log('select', selectSize);
+          setSelectSize(item), passToParent(item);
         }}>
         <Text
           style={{
@@ -46,7 +44,7 @@ function renderShoeSizes(selectedItem, selectedSize) {
       </TouchableOpacity>
     );
   });
-}
+};
 
 const ModalProduct = ({onClose, item, size}) => {
   return (
@@ -110,7 +108,14 @@ const ModalProduct = ({onClose, item, size}) => {
                   flexDirection: 'row',
                   marginLeft: SIZES.radius,
                 }}>
-                {renderShoeSizes(item, size)}
+                <RenderShoeSizes
+                  selectedItem={item}
+                  selectedSize={size}
+                  passToParent={value => {
+                    let newItem = {...item};
+                    newItem.sizes = value;
+                    return console.log('aaa', newItem);
+                  }}></RenderShoeSizes>
               </View>
               <TouchableOpacity onPress={onClose}>
                 <Text>Close</Text>

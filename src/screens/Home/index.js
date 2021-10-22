@@ -68,7 +68,7 @@ const Home = () => {
   const onPressItem = item => {
     setSelectedItem(item);
   };
-  console.log('value', trending);
+
   return (
     <View style={styles.container}>
       {selectedItem && (
